@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: vera-bot
+    runtime: docker
+    plan: free
+    healthCheckPath: /v1/healthz
+    envVars:
+      - key: TEAM_NAME
+        value: Vera++
+      - key: TEAM_MEMBERS
+        sync: false
+      - key: CONTACT_EMAIL
+        sync: false
+      - key: LLM_API_KEY
+        sync: false
