@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · Vera++</title>
+<meta name="theme-color" content="#09090b">
+<style>
+  :root{--bg:#09090b;--line:#27272a;--text:#fafafa;--muted:#a1a1aa;--dim:#71717a;--em:#34d399;--vi:#a78bfa}
+  *{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,sans-serif}
+  body{display:grid;place-items:center;padding:24px;overflow:hidden}
+  .glow{position:fixed;width:70vmax;height:70vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(52,211,153,.14),transparent 70%),radial-gradient(closest-side at 70% 60%,rgba(167,139,250,.14),transparent 70%);filter:blur(30px);pointer-events:none}
+  main{position:relative;max-width:560px;text-align:center}
+  .code{font-size:clamp(88px,18vw,160px);font-weight:750;letter-spacing:-.06em;line-height:1;background:linear-gradient(180deg,#fafafa,#3f3f46);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0}
+  h1{margin:10px 0 8px;font-size:22px;letter-spacing:-.02em}
+  p{margin:0 auto 22px;color:var(--muted);max-width:440px}
+  .bubble{display:inline-block;text-align:left;margin:0 auto 24px;background:#202c33;border-radius:14px;border-top-left-radius:4px;padding:10px 12px;max-width:420px;font-size:14px;color:#e9edef}
+  .bubble small{display:block;text-align:right;color:rgba(233,237,239,.55);font-size:11px;margin-top:4px}
+  code{font:13px ui-monospace,Menlo,Consolas,monospace;color:#d4d4d8;background:#18181b;border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  a.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:12px;text-decoration:none;font-weight:560;font-size:14px}
+  a.primary{background:var(--text);color:#09090b}
+  a.secondary{border:1px solid var(--line);color:var(--muted)}
+  a.secondary:hover{color:var(--text);border-color:#3f3f46}
+  a:focus-visible{outline:2px solid var(--em);outline-offset:3px}
+  ul{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+  li code{font-size:12px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<main>
+  <p class="code" aria-hidden="true">404</p>
+  <h1>This page didn’t make it past the auto-reply filter.</h1>
+  <div class="bubble" role="note">Couldn’t find <code>__PATH__</code>. No data, no message: Vera doesn’t make things up, and neither does this page.<small>Vera · just now</small></div>
+  <div class="row">
+    <a class="btn primary" href="/">Open the console</a>
+    <a class="btn secondary" href="/docs">API docs</a>
+  </div>
+  <ul aria-label="Available API endpoints">
+    <li><code>GET /v1/healthz</code></li><li><code>GET /v1/metadata</code></li><li><code>POST /v1/context</code></li>
+    <li><code>POST /v1/tick</code></li><li><code>POST /v1/reply</code></li><li><code>POST /v1/teardown</code></li>
+  </ul>
+</main>
+<script type="module">
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    try {
+      const { animate, stagger } = await import("https://cdn.jsdelivr.net/npm/motion@13.4.4/+esm");
+      animate(".code", { opacity: [0, 1], y: [24, 0], filter: ["blur(8px)", "blur(0px)"] }, { duration: .6 });
+      animate("h1, .bubble, .row, ul", { opacity: [0, 1], y: [12, 0] }, { delay: stagger(.08, { startDelay: .2 }), duration: .4 });
+      animate(".bubble", { rotate: [0, -1.5, 1.5, 0] }, { delay: 1, duration: .5 });
+    } catch {}
+  }
+</script>
+</body>
+</html>

@@ -128,6 +128,13 @@ async def timing_and_request_id(request: Request, call_next):
 
 @app.exception_handler(StarletteHTTPException)
 async def http_error(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404 and "text/html" in request.headers.get("accept", "") \
+            and not request.url.path.startswith(("/v1", "/demo/api")):
+        from html import escape
+        from pathlib import Path
+        from fastapi.responses import HTMLResponse
+        page = (Path(__file__).parent / "static" / "404.html").read_text(encoding="utf-8")
+        return HTMLResponse(page.replace("__PATH__", escape(request.url.path[:200])), status_code=404)
     if exc.status_code == 404:
         return JSONResponse(status_code=404, content={
             "error": "not_found",
@@ -160,9 +167,15 @@ async def unhandled(request: Request, exc: Exception):
         "error": "internal_error", "message": "Unexpected error; request not processed."})
 
 
-@app.get("/", include_in_schema=False)
-async def root():
+@app.get("/v1", include_in_schema=False)
+async def v1_index():
     return {"service": "vera", "version": VERSION, "endpoints": ENDPOINTS}
+
+
+# Human-facing demo console at "/" (sandboxed; never touches judge state).
+from demo import router as demo_router  # noqa: E402
+
+app.include_router(demo_router)
 
 
 # --------------------------------------------------------------------------- #
